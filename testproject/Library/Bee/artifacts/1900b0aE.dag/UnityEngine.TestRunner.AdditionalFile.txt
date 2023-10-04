@@ -1,1 +1,1 @@
-C:\Users\brand\Documents\School\CS 6457\horrorgame\testproject
+/Users/andynguyen/Documents/fall2023/vgdesign/horrorgame/testproject
