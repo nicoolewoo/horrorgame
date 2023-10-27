@@ -12,15 +12,12 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
 
+    private Vector3 eyePosition, targetPositionRaised;
 
     //Patrolling
     public Vector3 walkpoint;
     bool walkPointSet;
     public float walkpointRange;
-
-    //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
 
     //States
     public float sightRange, attackRange;
@@ -34,16 +31,21 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        player = GameObject.Find("AI_Minion");
+        player = GameObject.Find("The Adventurer Blake");
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        eyePosition = new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z);
+        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1.5f, player.transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        anim.SetFloat("vely",agent.velocity.magnitude / agent.speed);
+        // anim.SetFloat("vely",agent.velocity.magnitude / agent.speed);
         // playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        
+        eyePosition = new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z);
+        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1.5f, player.transform.position.z);
 
         playerInSightRange = isInView(sightRange);
         playerInAttackRange = isInView(attackRange);
@@ -60,14 +62,15 @@ public class EnemyAI : MonoBehaviour
         if(Physics.CheckSphere(transform.position, range, whatIsPlayer))
         {
             Transform target = player.transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Vector3 directionToTarget = (targetPositionRaised - eyePosition).normalized;
 
             if(Vector3.Angle(transform.forward, directionToTarget) < fov/2)
             {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+                float distanceToTarget = Vector3.Distance(eyePosition, targetPositionRaised);
 
-                if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, whatIsObstruction))
+                if(!Physics.Raycast(eyePosition, directionToTarget, distanceToTarget, whatIsObstruction))
                 {
+                    walkpoint = target.position;
                     return true;
                 }
                 return false;
@@ -77,6 +80,7 @@ public class EnemyAI : MonoBehaviour
 
         return false;
     }
+
 
     private void Patrol()
     {
@@ -125,6 +129,42 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+
+        float halfFOV = fov / 2.0f;
+        Quaternion leftRayRotation = Quaternion.AngleAxis( -halfFOV, Vector3.up );
+        Quaternion rightRayRotation = Quaternion.AngleAxis( halfFOV, Vector3.up );
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
+        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+        Gizmos.DrawRay( eyePosition, leftRayDirection * sightRange );
+        Gizmos.DrawRay( eyePosition, rightRayDirection * sightRange );
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(eyePosition,new Vector3(.1f,.1f,.1f));
+
+        
+        if(Physics.CheckSphere(transform.position, sightRange, whatIsPlayer))
+        {
+            Transform target = player.transform;
+            Vector3 directionToTarget = (targetPositionRaised - eyePosition).normalized;
+
+            Gizmos.DrawRay( eyePosition, (targetPositionRaised - eyePosition));
+
+            float distanceToTarget = Vector3.Distance(eyePosition, targetPositionRaised);
+
+            RaycastHit hit;
+            if (Physics.Raycast(eyePosition, directionToTarget, out hit, distanceToTarget, whatIsObstruction))
+            {
+                Gizmos.DrawSphere(hit.point, 0.1f);
+            }
+        }
+
+        if (walkPointSet)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, walkpoint);
+        }
+
+
     }
 
 }
