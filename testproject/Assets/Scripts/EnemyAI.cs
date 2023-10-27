@@ -19,12 +19,19 @@ public class EnemyAI : MonoBehaviour
     bool walkPointSet;
     public float walkpointRange;
 
+    //Waypoints for patrolling
+    public GameObject[] waypoints;
+    public int currWaypoint = -1;
+
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     [Range(0,360)]
     public float fov = 100;
+
+
+    
 
 
     // Start is called before the first frame update
@@ -91,7 +98,7 @@ public class EnemyAI : MonoBehaviour
         
         Vector3 distanceToWalkPoint = transform.position - walkpoint;
 
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 2f)
             walkPointSet = false;
 
     }
@@ -99,14 +106,34 @@ public class EnemyAI : MonoBehaviour
     private void SearchWalkPoint()
     {
         //Calculate random point in range
-        float randz = Random.Range(-walkpointRange, walkpointRange);
-        float randx = Random.Range(-walkpointRange, walkpointRange);
+        // float randz = Random.Range(-walkpointRange, walkpointRange);
+        // float randx = Random.Range(-walkpointRange, walkpointRange);
 
-        walkpoint = new Vector3(transform.position.x + randx, transform.position.y, transform.position.z + randz);
+        // walkpoint = new Vector3(transform.position.x + randx, transform.position.y, transform.position.z + randz);
+
+        setNextWalkpoint();
+
+        walkpoint = waypoints[currWaypoint].transform.position;
 
         if (Physics.Raycast(walkpoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
 
+    }
+
+    private void setNextWalkpoint()
+    {
+        if(waypoints.Length == 0)
+        {
+            return;
+        }
+        if(currWaypoint<0  || currWaypoint>= waypoints.Length-1)
+        {
+            currWaypoint = 0;
+        }
+        else
+        {
+            currWaypoint++;
+        } 
     }
 
     private void Chase()
