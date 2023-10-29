@@ -5,39 +5,38 @@ using UnityEngine.UI;
 
 public class DoorCellOpen : MonoBehaviour
 {
-    public float TheDistance;
-    public GameObject ActionDisplay;
-    public GameObject ActionText;
+    
+	public float distance;
+	public Transform player; 
+	public Transform target;
+	public GameObject ActionDisplay;
     public GameObject TheDoor;
+	public GameObject parentDoor;
 	void Update()
 	{
-		TheDistance = PlayerCasting.DistanceFromTarget;
-	}
 
-	void OnMouseOver()
-	{
-		if (TheDistance <= 8)
+		distance = Vector3.Distance(player.position, target.position);
+		if (distance < 3.5)
 		{
 			ActionDisplay.SetActive(true);
-			ActionText.SetActive(true);
-		}
-		if (Input.GetButtonDown("Action"))
-		{
-			if (TheDistance <= 2)
+
+			if (Input.GetButtonDown("Action"))
 			{
-				this.GetComponent<BoxCollider>().enabled = false;
+				Debug.Log("test");
+				BoxCollider boxCollider = parentDoor.GetComponent<BoxCollider>();
+				boxCollider.enabled = false;
 				ActionDisplay.SetActive(false);
-				ActionText.SetActive(false);
+
 				TheDoor.GetComponent<Animation>().Play("FirstDoorOpenAnim");
-				
+
 			}
 		}
+		else
+        {
+			ActionDisplay.SetActive(false);
+        }
+		
 	}
 
-	void OnMouseExit()
-	{
-		ActionDisplay.SetActive(false);
-		ActionText.SetActive(false);
-	}
 
 }
