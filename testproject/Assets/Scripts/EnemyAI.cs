@@ -47,7 +47,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // anim.SetFloat("vely",agent.velocity.magnitude / agent.speed);
+        anim.SetFloat("vely",agent.velocity.magnitude / agent.speed);
         // playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
         
@@ -145,7 +145,9 @@ public class EnemyAI : MonoBehaviour
     {
 
         agent.SetDestination(transform.position);
+        agent.isStopped = true;
         transform.LookAt(player.transform);
+        anim.SetTrigger("attack");
 
     }
 
