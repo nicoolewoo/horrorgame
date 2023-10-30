@@ -15,6 +15,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotationPower = 0.1f;
     public float rotationLerp = 0.3f;
     public float speed = 0.3f;
+    public static bool isPaused;
 
     public void OnLook(InputValue value)
     {
@@ -27,8 +28,8 @@ public class ThirdPersonCamera : MonoBehaviour
     
 	void Update ()
 	{
-
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+        if (!PauseMenuToggle.isPaused) {
+                    Vector2 mouseDelta = Mouse.current.delta.ReadValue();
         transform.rotation *= Quaternion.AngleAxis(mouseDelta.x * rotationPower, Vector3.up);
         target.transform.rotation *= Quaternion.AngleAxis(-mouseDelta.y * rotationPower, Vector3.right);
 
@@ -68,6 +69,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, target.transform.rotation.eulerAngles.y, 0);
         target.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+        }
     }
 
 }

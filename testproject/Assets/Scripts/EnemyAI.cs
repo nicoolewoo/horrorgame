@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
@@ -148,7 +149,7 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = true;
         transform.LookAt(player.transform);
         anim.SetTrigger("attack");
-
+        SceneManager.LoadScene("LoseScene");
     }
 
 
