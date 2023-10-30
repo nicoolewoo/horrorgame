@@ -12,6 +12,7 @@ public class DoorCellOpen : MonoBehaviour
 	public GameObject ActionDisplay;
     public GameObject TheDoor;
 	public GameObject parentDoor;
+	public AudioSource CreakSound;
 	void Update()
 	{
 
@@ -28,8 +29,9 @@ public class DoorCellOpen : MonoBehaviour
 				ActionDisplay.SetActive(false);
 
 				TheDoor.GetComponent<Animation>().Play("FirstDoorOpenAnim");
+				CreakSound.Play();
 
-			}
+            }
 		}
 		else
         {
