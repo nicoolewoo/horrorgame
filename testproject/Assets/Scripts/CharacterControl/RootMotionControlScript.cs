@@ -159,6 +159,7 @@ public class RootMotionControlScript : MonoBehaviour
 
         newRootRotation = anim.rootRotation;
 
+        newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, rootTurnSpeed);
         newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
 
         rbody.MovePosition(newRootPosition);

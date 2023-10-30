@@ -4,57 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-// Here is an expanded version of the EventManager from: 
-// https://unity3d.com/learn/tutorials/topics/scripting/events-creating-simple-messaging-system
-// C# generics can be frustrating if you haven't seen them or C++ templates before. 
-// This code implements the generics support you need for varying param counts.
-// It supports all the different parameter counts of the UnityEvents. 
-// Also, it uses class type as dictionary key instead of strings.
-// 
-// Jeff Wilson (jeff@imtc.gatech.edu)
-
-
-
-
-// Also, here are some demonstrations of use:
-
-////Example custom event. the param types can be pretty much anything. not just floats
-//public class TwoParamEvent : UnityEvent<float, float> { }
-//
-////two-param unity action
-//private UnityAction<float, float> twoParamEventListener;
-//
-//    ....
-//
-//    //twoParamHandler shows defined below
-//    twoParamEventListener = new UnityAction<float, float> (twoParamHandler);
-//
-//    ....
-//
-//    //note that we no longer pass a string event name. the first generic param handles ID of event type
-//    EventManager.TriggerEvent<TwoParamEvent, float, float> ( 3f, 5f);
-//
-//    ....
-//
-//    EventManager.StartListening<TwoParamEvent, float, float> ( twoParamEventListener);
-//
-//    .....
-//
-//    EventManager.StopListening<TwoParamEvent, float, float> (twoParamEventListener);
-//
-//    .....
-//
-//    void twoParamHandler (float a, float b)
-//{
-//
-//    float total = a + b;
-//
-//    //no string builder b/c I'm lazy
-//    print ("a (" + a.ToString () + ") + b (" + b.ToString () + ") = " + total.ToString ());
-//
-//}
-
-
 public class EventManager : MonoBehaviour
 {
 
