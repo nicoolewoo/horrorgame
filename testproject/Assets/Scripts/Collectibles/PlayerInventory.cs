@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerInventory : MonoBehaviour
 {
     public bool hasKey = false;
-    public int keyCount = 0;
+    public static int keyCount = 0;
+    public TextMeshProUGUI keyDisplay;
+    public int internalKey;
+    void Update() {
+        internalKey = keyCount;
+        keyDisplay.text = "" + keyCount;
+    }
     public void AddKey()
     {
         keyCount++;

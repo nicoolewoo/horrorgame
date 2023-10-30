@@ -15,7 +15,6 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotationPower = 0.1f;
     public float rotationLerp = 0.3f;
     public float speed = 0.3f;
-    public static bool isPaused;
 
     public void OnLook(InputValue value)
     {
