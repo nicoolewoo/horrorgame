@@ -15,6 +15,7 @@ public class DoorUnlock : MonoBehaviour
         distance = Vector3.Distance(player.position, target.position);
         if (distance < 2.5)
         {
+            Debug.Log("Testing");
             ActionDisplay.SetActive(true);
         }
         else
