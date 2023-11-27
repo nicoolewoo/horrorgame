@@ -12,10 +12,6 @@ public class PlayerInventory : MonoBehaviour
     public TextMeshProUGUI keyDisplay;
     public int internalKey;
 
-    //batteries
-    public bool hasBattery = false;
-    public static int batteryCount = 0;
-
     void Update() {
         internalKey = keyCount;
         keyDisplay.text = "" + keyCount;
@@ -29,13 +25,6 @@ public class PlayerInventory : MonoBehaviour
         {
             hasKey = true;
         }
-        
-    }
-    public void AddBattery()
-    {
-        batteryCount++;
-        Debug.Log("Battery added! Total batteries: " + batteryCount);
-        hasBattery = true;
         
     }
 }

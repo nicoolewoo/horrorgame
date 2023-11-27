@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
-
     private Animator anim;
     private UnityEngine.AI.NavMeshAgent agent;
     public GameObject player;
@@ -150,6 +149,7 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(player.transform);
         anim.SetTrigger("attack");
         SceneManager.LoadScene("LoseScene");
+        
     }
 
 

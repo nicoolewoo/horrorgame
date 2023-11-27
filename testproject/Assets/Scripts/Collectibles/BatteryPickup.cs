@@ -10,14 +10,18 @@ public class BatteryPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            audioSource.Play();
-            other.GetComponent<PlayerInventory>().AddBattery();
-            Destroy(gameObject);
-            Recharge light = other.GetComponent<Recharge>();
+            FlashlightController flashlightController = other.GetComponentInChildren<FlashlightController>();
 
-            if (light != null) {
-                light.Charge();
-            } else {
+            if (flashlightController != null)
+            {
+                // Recharge the battery
+                flashlightController.RechargeBattery();
+
+                // Destroy battery object and play pickup sound
+                audioSource.Play();
+                Destroy(gameObject);
+            }
+            else {
                 Debug.Log("no light found");
                 
             }
