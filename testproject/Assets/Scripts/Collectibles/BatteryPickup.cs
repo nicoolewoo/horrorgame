@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BatteryPickup : MonoBehaviour
 {
-    
+    public AudioSource audioSource;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            audioSource.Play();
             other.GetComponent<PlayerInventory>().AddBattery();
             Destroy(gameObject);
             Recharge light = other.GetComponent<Recharge>();

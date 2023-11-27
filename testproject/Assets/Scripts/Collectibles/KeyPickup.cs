@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class KeyPickup : MonoBehaviour
 {
-    private AudioSource audioSource;
-    private void Start()
-    {
-        // Get the AudioSource component attached to this GameObject
-        audioSource = GetComponent<AudioSource>();
-    }
+    public AudioSource audioSource;
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
- 
+
             // Play a sound on pickup
+            audioSource.time = 0.3f;
             audioSource.Play();
 
             // Add key to player's inventory
