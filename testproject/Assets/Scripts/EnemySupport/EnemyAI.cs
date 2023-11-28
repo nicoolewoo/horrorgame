@@ -30,8 +30,9 @@ public class EnemyAI : MonoBehaviour
     [Range(0,360)]
     public float fov = 100;
 
+    private float soundDelay = 0.0f;
+    private static float lastSoundTime;
 
-    
 
 
     // Start is called before the first frame update
@@ -58,7 +59,17 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = isInView(attackRange);
 
         if (!playerInSightRange && !playerInAttackRange) Patrol();
-        if (playerInSightRange && !playerInAttackRange) Chase();
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            if (Time.time - lastSoundTime >= soundDelay)
+            {
+                EventManager.TriggerEvent<zombieChaseEvent, Vector3>(transform.position);
+                soundDelay = Random.Range(2.0f, 4.0f);
+                lastSoundTime = Time.time;
+            }
+            
+            Chase();
+        }
         if (playerInAttackRange && playerInSightRange) Attack();
         
     }
