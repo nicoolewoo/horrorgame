@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.041322213, g: 0.032894775, b: 0.019236365, a: 1}
+  m_IndirectSpecularColor: {r: 0.041322205, g: 0.03289474, b: 0.019236354, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1471,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -1480,7 +1480,7 @@ PrefabInstance:
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2044111802}
+      objectReference: {fileID: 2044111806}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1491,11 +1491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnButtonClick
       objectReference: {fileID: 0}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
+      value: BatteryButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2492251295773384995, guid: 65d9f509d55cd6f44b1678f9b9fc3d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -6558,7 +6558,7 @@ MonoBehaviour:
   initalMatchTargetsAnimTime: 0
   exitMatchTargetsAnimTime: 0
   animationSpeed: 1
-  rootMovementSpeed: 1
+  rootMovementSpeed: 2.47
   rootTurnSpeed: 2.7
   jumpableGroundNormalMaxAngle: 45
   closeToJumpableGround: 0
@@ -6610,7 +6610,7 @@ MonoBehaviour:
   hasKey: 0
   keyDisplay: {fileID: 16486560}
   internalKey: 0
-  BatteryNumber: {fileID: 0}
+  BatteryNumber: {fileID: 1270037984}
 --- !u!114 &759743640
 MonoBehaviour:
   m_ObjectHideFlags: 0

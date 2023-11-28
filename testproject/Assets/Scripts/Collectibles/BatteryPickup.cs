@@ -14,11 +14,10 @@ public class BatteryPickup : MonoBehaviour
 
             if (flashlightController != null)
             {
-                // Recharge the battery
-                flashlightController.RechargeBattery();
-
                 // Destroy battery object and play pickup sound
                 audioSource.Play();
+
+                // Add battery to inventory
                 other.GetComponent<PlayerInventory>().AddBattery();
                 Destroy(gameObject);
             }
