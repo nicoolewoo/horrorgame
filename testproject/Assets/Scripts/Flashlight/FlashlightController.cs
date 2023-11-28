@@ -7,7 +7,7 @@ public class FlashlightController : MonoBehaviour
 {
     public float maxBatteryLevel = 120f;
     public float currentBatteryLevel = 120f;
-    public float batteryConsumptionRate = 6f;
+    public float batteryConsumptionRate = 0.5f;
 
     public Image FlashlightBatteryLevel;
     private Light flashlight;

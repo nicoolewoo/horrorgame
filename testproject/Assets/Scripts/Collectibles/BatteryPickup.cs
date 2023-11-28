@@ -19,6 +19,7 @@ public class BatteryPickup : MonoBehaviour
 
                 // Destroy battery object and play pickup sound
                 audioSource.Play();
+                other.GetComponent<PlayerInventory>().AddBattery();
                 Destroy(gameObject);
             }
             else {
