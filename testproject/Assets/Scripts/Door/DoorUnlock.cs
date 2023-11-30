@@ -12,6 +12,7 @@ public class DoorUnlock : MonoBehaviour
     public GameObject ActionDisplay2;
     public GameObject TheDoor;
 	public GameObject parentDoor;
+    public bool instructionsRead = false;
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +21,7 @@ public class DoorUnlock : MonoBehaviour
         {
             if (PlayerInventory.keyCount < 5) {
                 ActionDisplay.SetActive(true);
+                instructionsRead = true;
             }
             else {
                 ActionDisplay2.SetActive(true);
