@@ -15,8 +15,12 @@ public class PlayerInventory : MonoBehaviour
     //batteries
     public static int batteryCount = 0;
     public TextMeshProUGUI BatteryNumber;
+    private Animator animator;
 
-
+    void Start () 
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update() {
         internalKey = keyCount;
         keyDisplay.text = "" + keyCount;
@@ -26,6 +30,11 @@ public class PlayerInventory : MonoBehaviour
     public void AddKey()
     {
         keyCount++;
+        bool trigAnim = animator.GetBool("animKey");
+        animator.SetBool("animKey", true);
+        StartCoroutine(ResetAnimKeyAfterDelay());
+        
+
         Debug.Log("Key added! Total keys: " + keyCount);
         if (keyCount == 5)
         {
@@ -41,5 +50,10 @@ public class PlayerInventory : MonoBehaviour
     public void RemoveBattery() {
         batteryCount--;
         Debug.Log("total batteries" + batteryCount);
+    }
+    IEnumerator ResetAnimKeyAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        animator.SetBool("animKey", false);
     }
 }

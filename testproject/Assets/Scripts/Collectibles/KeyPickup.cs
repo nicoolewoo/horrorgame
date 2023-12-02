@@ -17,8 +17,8 @@ public class KeyPickup : MonoBehaviour
             audioSource.Play();
 
             // Add key to player's inventory
-            other.GetComponent<PlayerInventory>().AddKey();
 
+            other.GetComponent<PlayerInventory>().AddKey();
             // Destroy key game object from scene
             Destroy(gameObject);
         }

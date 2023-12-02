@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class FlashlightController : MonoBehaviour
 {
-    public float maxBatteryLevel = 120f;
-    public float currentBatteryLevel = 120f;
-    public float batteryConsumptionRate = 0.20f;
+    public float maxBatteryLevel = 200f;
+    public float currentBatteryLevel = 200f;
+    public float batteryConsumptionRate = 0.10f;
 
     public Image FlashlightBatteryLevel;
     private Light flashlight;
