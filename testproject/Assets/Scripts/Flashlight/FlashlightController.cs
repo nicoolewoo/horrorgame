@@ -19,8 +19,10 @@ public class FlashlightController : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         if (currentBatteryLevel > 0f)
         {
+            
             // Decrease battery level over time
             DecreaseBatteryLevel(Time.fixedDeltaTime * batteryConsumptionRate);
 

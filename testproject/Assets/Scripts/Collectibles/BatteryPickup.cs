@@ -19,11 +19,12 @@ public class BatteryPickup : MonoBehaviour
 
                 // Add battery to inventory
                 other.GetComponent<PlayerInventory>().AddBattery();
+                Debug.Log("test");
                 Destroy(gameObject);
             }
             else {
                 Debug.Log("no light found");
-                
+                Destroy(gameObject);
             }
             
             
