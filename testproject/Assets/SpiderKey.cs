@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-public class EnemyAI : MonoBehaviour
+public class SpiderKey : MonoBehaviour
 {
+
     private Animator anim;
     private UnityEngine.AI.NavMeshAgent agent;
     public GameObject player;
+    public GameObject key;
 
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
 
@@ -16,63 +16,68 @@ public class EnemyAI : MonoBehaviour
 
     //Patrolling
     public Vector3 walkpoint;
-    bool walkPointSet;
-    public float walkpointRange;
+    bool walkPointSet = false;
 
     //Waypoints for patrolling
     public GameObject[] waypoints;
-    public int currWaypoint = -1;
+    private int currWaypoint = 0;
+    private int prevWaypoint = 3;
 
     //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public float sightRange;
 
     [Range(0,360)]
     public float fov = 100;
 
-    private float soundDelay = 0.0f;
-    private static float lastSoundTime;
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
-        player = GameObject.Find("The Adventurer Blake");
+        anim = this.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Animator>();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        eyePosition = new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z);
-        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1.5f, player.transform.position.z);
-
+        eyePosition = new Vector3(transform.position.x, transform.position.y+1f, transform.position.z);
+        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1f, player.transform.position.z);
+        transform.LookAt(waypoints[3].transform);
     }
 
     // Update is called once per frame
     void Update()
     {
         anim.SetFloat("vely",agent.velocity.magnitude / agent.speed);
-        // playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        
-        eyePosition = new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z);
-        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1.5f, player.transform.position.z);
 
-        playerInSightRange = isInView(sightRange);
-        playerInAttackRange = isInView(attackRange);
+        eyePosition = new Vector3(transform.position.x, transform.position.y+1f, transform.position.z);
+        targetPositionRaised = new Vector3(player.transform.position.x, player.transform.position.y+1f, player.transform.position.z);
 
-        if (!playerInSightRange && !playerInAttackRange) Patrol();
-        if (playerInSightRange && !playerInAttackRange)
+        if(key==null)
         {
-            if (Time.time - lastSoundTime >= soundDelay)
-            {
-                EventManager.TriggerEvent<zombieChaseEvent, Vector3>(transform.position);
-                soundDelay = Random.Range(2.0f, 4.0f);
-                lastSoundTime = Time.time;
-            }
-            
-            Chase();
+            anim.SetTrigger("death");
+            Destroy(gameObject,5);
         }
-        if (playerInAttackRange && playerInSightRange) Attack();
         
+        if(walkPointSet)
+        {
+            Vector3 distanceToWalkPoint = transform.position - walkpoint;
+
+            if (distanceToWalkPoint.magnitude < 2f)
+            {
+                
+
+                prevWaypoint = currWaypoint - 1;
+                if(prevWaypoint<0){
+                    prevWaypoint = waypoints.Length-1;
+                }
+
+                transform.LookAt(waypoints[prevWaypoint].transform);
+
+                Debug.Log(prevWaypoint);
+                walkPointSet = false;
+            }           
+        }
+
+        if(isInView(sightRange))
+        {
+            fleeToNextCorner();
+        }
+
     }
 
     //check if player is within range and line of sight
@@ -89,7 +94,6 @@ public class EnemyAI : MonoBehaviour
 
                 if(!Physics.Raycast(eyePosition, directionToTarget, distanceToTarget, whatIsObstruction))
                 {
-                    walkpoint = target.position;
                     return true;
                 }
                 return false;
@@ -100,29 +104,18 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
-
-    private void Patrol()
+    private void fleeToNextCorner()
     {
+        anim.SetTrigger("move");
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
             agent.SetDestination(walkpoint);
-        
-        Vector3 distanceToWalkPoint = transform.position - walkpoint;
-
-        if (distanceToWalkPoint.magnitude < 2f)
-            walkPointSet = false;
 
     }
 
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
-        // float randz = Random.Range(-walkpointRange, walkpointRange);
-        // float randx = Random.Range(-walkpointRange, walkpointRange);
-
-        // walkpoint = new Vector3(transform.position.x + randx, transform.position.y, transform.position.z + randz);
-
         setNextWalkpoint();
 
         walkpoint = waypoints[currWaypoint].transform.position;
@@ -131,7 +124,7 @@ public class EnemyAI : MonoBehaviour
             walkPointSet = true;
 
     }
-
+    
     private void setNextWalkpoint()
     {
         if(waypoints.Length == 0)
@@ -148,29 +141,12 @@ public class EnemyAI : MonoBehaviour
         } 
     }
 
-    private void Chase()
-    {
-        agent.SetDestination(player.transform.position);
-    }
-
-    private void Attack()
-    {
-
-        agent.SetDestination(transform.position);
-        agent.isStopped = true;
-        transform.LookAt(player.transform);
-        anim.SetTrigger("attack");
-        SceneManager.LoadScene("LoseScene");
-        
-    }
-
-
     private void OnDrawGizmosSelected() {
         
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+
+        Gizmos.DrawWireSphere(waypoints[prevWaypoint].transform.position, 3);
 
         float halfFOV = fov / 2.0f;
         Quaternion leftRayRotation = Quaternion.AngleAxis( -halfFOV, Vector3.up );
@@ -200,13 +176,6 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (walkPointSet)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, walkpoint);
-        }
-
 
     }
-
 }

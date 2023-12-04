@@ -34,7 +34,6 @@ public class MannequinAI : MonoBehaviour
         //Get the AI's distance from the player
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        Debug.Log(distance);
 
         if (isInPlayerView() || distance > sightRange || distance <= minDist)
         {

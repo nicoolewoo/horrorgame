@@ -90,6 +90,7 @@ public class SpiderSeek : MonoBehaviour
 
     private void Patrol()
     {
+        anim.SetTrigger("move");
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -138,7 +139,6 @@ public class SpiderSeek : MonoBehaviour
     {
 
         agent.SetDestination(transform.position);
-        agent.isStopped = true;
         transform.LookAt(player.transform);
         anim.SetTrigger("attack");
         
