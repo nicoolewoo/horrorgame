@@ -86,6 +86,7 @@ public class DoorCellOpen : MonoBehaviour
             openActionDisplay.SetActive(false);
             closeActionDisplay.SetActive(false);
             gotoOtherDoor.SetActive(false);
+            playerCloseEnough = false;
         }
     }
 }

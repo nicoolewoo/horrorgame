@@ -955,7 +955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &108252976
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9069,8 +9069,8 @@ MonoBehaviour:
   initalMatchTargetsAnimTime: 0
   exitMatchTargetsAnimTime: 0
   animationSpeed: 1
-  rootMovementSpeed: 1
-  rootTurnSpeed: 1
+  rootMovementSpeed: 4
+  rootTurnSpeed: 4
   jumpableGroundNormalMaxAngle: 45
   closeToJumpableGround: 0
 --- !u!114 &759743632
