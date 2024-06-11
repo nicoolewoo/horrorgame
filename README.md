@@ -1,8 +1,6 @@
 # horrorgame
 Start Scene File
 MainMenuScene
-How to Play
-It must be a 3D Game Feel game!
 
 The goal is to traverse around the map and collect 5 keys to unlock the map and escape, while also avoiding the ai controlled enemy. 
 Supports a start menu, pause menu, win and lose scenes
